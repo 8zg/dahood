@@ -1,3 +1,4 @@
+
 local userInput = game:GetService('UserInputService')
 local runService = game:GetService('RunService')
  
@@ -12,6 +13,18 @@ Mouse.KeyDown:connect(function(Key)
                     game:GetService("RunService").Stepped:wait()
                 until Settings.CFSpeed.Enabled == false
             end
+        end
+    end
+end)
+
+runService.RenderStepped:Connect(function()
+    updateFOV()
+    updateLock()
+    victimMan = getClosestPlayerToCursor()
+    if Settings.Aimlock.Enabled == true then
+        if lockVictim ~= nil then
+            Camera.CFrame = CFrame.new(Camera.CFrame.p, lockVictim.Character[Settings.Aimlock.AimPart].Position + lockVictim.Character[Settings.Aimlock.AimPart].Velocity*Settings.Aimlock.Prediction)
+            
         end
     end
 end)
